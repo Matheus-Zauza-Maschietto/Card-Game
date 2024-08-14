@@ -9,4 +9,6 @@ namespace app.Models;
 public class User : IdentityUser
 {
     public string Role { get; set; }
+    public int LanguageId { get; set; }
+    public Laguage Language { get; set; }
 }
