@@ -10,20 +10,19 @@ services:
     networks:
       - "cardgame"
     volumes:
-      - "./db_volume:var/opt/mssql/data"
+       - "./db_volume:/var/opt/mssql"
 
-  backend:
-    depends_on:
-      - database
-    container_name: "cardgame-backend"
-    build: ./DOCKERFILE
-    image: "./"
-    ports:
-      - 5000:5000
-    networks:
-      - "cardgame"
+  # backend:
+  #   depends_on:
+  #     - database
+  #   container_name: "cardgame-backend"
+  #   build: "."
+  #   ports:
+  #     - 5000:5000
+  #   networks:
+  #     - "cardgame"
 networks:
   cardgame:
-    driver:  bridge
+    driver: bridge
 volumes:
   db_volume:

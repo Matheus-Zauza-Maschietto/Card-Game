@@ -1,0 +1,13 @@
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/bin/Debug/net8.0/app.Integration.deps.json
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/bin/Debug/net8.0/app.Integration.dll
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/bin/Debug/net8.0/app.Integration.pdb
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.csproj.AssemblyReference.cache
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.GeneratedMSBuildEditorConfig.editorconfig
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.AssemblyInfoInputs.cache
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.AssemblyInfo.cs
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.csproj.CoreCompileInputs.cache
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.sourcelink.json
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.dll
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/refint/app.Integration.dll
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/app.Integration.pdb
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Integration/obj/Debug/net8.0/ref/app.Integration.dll

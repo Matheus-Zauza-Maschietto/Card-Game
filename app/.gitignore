@@ -5,7 +5,7 @@
 
 # dotenv files
 .env
-
+/output
 # database volume
 /db_volume
 
