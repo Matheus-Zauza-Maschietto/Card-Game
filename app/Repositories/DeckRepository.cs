@@ -26,14 +26,55 @@ public class DeckRepository : IDeckRepository
 
     public async Task<Deck?> GetDeckByUserAndIdAsync(User user, Guid id)
     {
-        return await _deckContext.AsNoTracking().FirstOrDefaultAsync(p => p.User == user && p.Id == id);
+        return await _deckContext
+        .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Id == id);
+    }
+
+    public async Task<Deck?> GetDeckByUserAndIdUsingIncludesAsync(User user, Guid id)
+    {
+        return await _deckContext.AsNoTracking()
+        .Include(e => e.DeckCards)
+        .ThenInclude(p => p.Card)
+        .ThenInclude(e => e.Colors)
+        .Include(e => e.DeckCards)
+        .ThenInclude(p => p.Card)
+        .ThenInclude(e => e.Legalities)
+        .Include(e => e.DeckCards)
+        .ThenInclude(p => p.Card)
+        .ThenInclude(e => e.Types)
+        .Include(e => e.DeckCards)
+        .ThenInclude(p => p.Card)
+        .ThenInclude(e => e.Subtypes)
+        .Include(e => e.DeckCards)
+        .ThenInclude(p => p.Card)
+        .ThenInclude(e => e.CardPrintings)
+        .Include(e => e.DeckCards)
+        .ThenInclude(p => p.Card)
+        .ThenInclude(e => e.ForeignNames)
+        .Include(e => e.User)
+        .ThenInclude(e => e.Language)
+        .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Id == id);
     }
 
     public async Task<Deck> CreateDeckAsync(Deck deck)
     {
         var createdDeck = await _deckContext.AddAsync(deck);
         _context.SaveChanges();
-        return deck; // TODO: retornar createdDeck e verificar savechanges
+        return createdDeck.Entity;
+    }
+
+    public async Task<Deck> DeleteDeckAsync(Deck deck)
+    {
+        _deckContext.Remove(deck);
+        await _context.SaveChangesAsync();
+        return deck;
+    }
+
+    public async Task<Deck> UpdateDeckAsync(Deck newDeck)
+    {
+        var deckUpdated = _deckContext.Update(newDeck);
+        await _context.SaveChangesAsync();
+        return deckUpdated.Entity;
     }
 
 }

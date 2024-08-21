@@ -22,4 +22,9 @@ public class LanguageRepository : ILanguageRepository
     {
         return await _languageContext.AsNoTracking().ToListAsync();
     }
+
+    public async Task<Language?> GetLanguageByUserAsync(User user)
+    {
+        return await _languageContext.AsNoTracking().FirstOrDefaultAsync(p => p.Users.Contains(user));
+    }
 }

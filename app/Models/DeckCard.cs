@@ -7,6 +7,7 @@ namespace app.Models;
 
 public class DeckCard
 {
+    public int Id { get; set; }
     public Guid CardId { get; set; }
     public Card Card { get; set; }
     public Guid DeckId { get; set; }

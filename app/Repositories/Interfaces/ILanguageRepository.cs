@@ -8,4 +8,5 @@ namespace app.Repositories.Interfaces;
 public interface ILanguageRepository
 {
     Task<ICollection<Language>> GetAllLanguagesAsync();
+    Task<Language?> GetLanguageByUserAsync(User user);
 }

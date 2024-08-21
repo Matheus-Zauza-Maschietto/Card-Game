@@ -36,26 +36,52 @@ public class CardDTO
         
     }
 
-    public CardDTO(Card card) //TODO: Passar linguagem e enviar os campos de foreign language como se fossem os campos de dados com base na linguagem
+    public CardDTO(Card? card)
     {
-        Name = card.Name;
+        Name = card?.Name;
+        ManaCost = card?.ManaCost;
+        Cmc = card?.Cmc ?? 0;
+        Colors = card?.Colors?.Select(c => c?.ColorAbbreviation)?.ToList();
+        Type = card?.Type;
+        Types = card?.Types?.Select(t => t?.TypeName)?.ToList();
+        Subtypes = card?.Subtypes?.Select(s => s?.SubTypeName)?.ToList();
+        Rarity = card?.Rarity;
+        Set = card?.Set;
+        SetName = card?.SetName;
+        Text = card?.Text;
+        Artist = card?.Artist;
+        Number = card?.Number;
+        Power = card?.Power;
+        Toughness = card?.Toughness;
+        Layout = card?.Layout;
+        Multiverseid = card?.Multiverseid;
+        ImageUrl = card?.ImageUrl;
+        Printings = card?.Printings?.Select(p => p?.Name)?.ToList();
+        OriginalText = card?.OriginalText;
+        OriginalType = card?.OriginalType;
+        Legalities = card?.Legalities?.Select(l => new LegalityDTO(l))?.ToList();
+    }
+
+    public CardDTO(Card card, ForeignName foreign) 
+    {
+        Name = foreign.Name;
         ManaCost = card.ManaCost;
         Cmc = card.Cmc;
         Colors = card.Colors.Select(c => c.ColorAbbreviation).ToList();
-        Type = card.Type;
+        Type = foreign.Type;
         Types = card.Types.Select(t => t.TypeName).ToList();
         Subtypes = card.Subtypes.Select(s => s.SubTypeName).ToList();
         Rarity = card.Rarity;
         Set = card.Set;
         SetName = card.SetName;
-        Text = card.Text;
+        Text = foreign.Text;
         Artist = card.Artist;
         Number = card.Number;
         Power = card.Power;
         Toughness = card.Toughness;
         Layout = card.Layout;
         Multiverseid = card.Multiverseid;
-        ImageUrl = card.ImageUrl;
+        ImageUrl = foreign.ImageUrl;
         Printings = card.Printings.Select(p => p.Name).ToList();
         OriginalText = card.OriginalText;
         OriginalType = card.OriginalType;

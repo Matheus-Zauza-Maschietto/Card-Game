@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using app.DTOs;
 using app.Integration.Models;
 using app.Models;
 using app.Repositories.Interfaces;
@@ -32,9 +33,28 @@ public class CardService
             throw new Exception("Card not found");
         }
 
-        card = new Card(apiCard);
+        var createdCard = await CreateCardAsync(new Card(apiCard));
+        return createdCard;
+    }
 
-        return card;
+    public IEnumerable<CardDTO> SetCardListLanguage(ICollection<Card> cards, Language language)
+    {
+        foreach(var card in cards)
+            yield return SetCardLanguage(card, language);
+    }
+
+    public CardDTO SetCardLanguage(Card card, Language language)
+    {
+        ForeignName? foreignName = card?.ForeignNames?.FirstOrDefault(p => p.Language == language?.LanguageName);
+
+        if(foreignName is not null)
+        {
+            return new CardDTO(card, foreignName);
+        }
+        else
+        {
+            return new CardDTO(card);
+        }
     }
 
     public async Task<ICollection<Card>> GetOneHundredCardsByColorAsync(Card card)
@@ -57,6 +77,10 @@ public class CardService
         cards.Add(card);
 
         return cards;
+    }
+
+    public async Task<Card> CreateCardAsync(Card card){
+        return await _cardRepository.CreateCard(card);
     }
 
     private async Task<List<Card>> GetCardsAsync(ICollection<ApiMagicCard> apiCards)

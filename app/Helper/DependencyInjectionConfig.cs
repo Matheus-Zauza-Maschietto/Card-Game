@@ -16,6 +16,7 @@ namespace app.Helper;
             builder.Services.AddTransient<JsonWebTokensService>();
             builder.Services.AddScoped<UserService>();  
             builder.Services.AddScoped<LanguageService>();
+            builder.Services.AddScoped<DeckCardService>();
             builder.Services.AddScoped<DeckService>();
             builder.Services.AddScoped<CardService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -23,5 +24,6 @@ namespace app.Helper;
             builder.Services.AddScoped<IDeckRepository, DeckRepository>();
             builder.Services.AddScoped<ICardRepository, CardRepository>();
             builder.Services.AddScoped<ICardApiRepository, CardApiRepository>();
+            builder.Services.AddScoped<IDeckCardRepository, DeckCardRepository>();
         }
     }

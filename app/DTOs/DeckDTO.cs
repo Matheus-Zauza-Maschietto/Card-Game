@@ -9,6 +9,7 @@ namespace app.DTOs;
 
 public class DeckDTO
 {
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public CardDTO? CommanderCard { get; set; }
     public ICollection<CardDTO>? Cards { get; set; }
@@ -18,10 +19,17 @@ public class DeckDTO
         
     }
 
-    public DeckDTO(Deck deck, Card commanderCard)
+    public DeckDTO(Deck deck, CardDTO commanderCard, ICollection<CardDTO> cards)
     {
+        Id = deck.Id;
         Name = deck.Name;
-        CommanderCard = new CardDTO(commanderCard);
-        Cards = deck.Cards.Select(p => new CardDTO(p)).ToList();
+        CommanderCard = commanderCard;
+        Cards = cards;
+    }
+
+    public DeckDTO(Deck deck)
+    {
+        Id = deck.Id;
+        Name = deck.Name;
     }
 }

@@ -12,13 +12,22 @@ namespace app.Repositories;
 public class CardRepository : ICardRepository
 {
     private readonly DbSet<Card> _cardContext;
+    private readonly ApplicationDbContext _context;
     public CardRepository(ApplicationDbContext context)
     {
         _cardContext = context.Cards;
+        _context = context;
     }
 
     public async Task<Card?> GetCardByIdAsync(Guid id)
     {
         return await _cardContext.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+    }
+
+    public async Task<Card> CreateCard(Card card)
+    {
+        var createdCard = await _cardContext.AddAsync(card);
+        await _context.SaveChangesAsync();
+        return createdCard.Entity;
     }
 }

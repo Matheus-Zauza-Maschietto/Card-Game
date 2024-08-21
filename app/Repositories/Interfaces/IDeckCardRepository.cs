@@ -6,8 +6,7 @@ using app.Models;
 
 namespace app.Repositories.Interfaces;
 
-public interface ICardRepository
+public interface IDeckCardRepository
 {
-    Task<Card?> GetCardByIdAsync(Guid id);
-    Task<Card> CreateCard(Card card);
+    Task SetDeckCommanderAsync(int deckCardId);
 }

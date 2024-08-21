@@ -1,7 +1,7 @@
 services:
   database:
     container_name: "cardgame-database"
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     ports: 
       - 1433:1433
     environment:
@@ -10,7 +10,7 @@ services:
     networks:
       - "cardgame"
     volumes:
-       - "./db_volume:/var/opt/mssql"
+       - "./db_volume:/mssql/data"
 
   # backend:
   #   depends_on:

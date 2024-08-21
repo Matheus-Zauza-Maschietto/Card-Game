@@ -13,14 +13,15 @@ public class UserRepository: IUserRepository
 {
     private readonly UserManager<User> _userManager;
 
-    public UserRepository(UserManager<User> userManager, JsonWebTokensService webTokensService)
+    public UserRepository(UserManager<User> userManager)
     {
         _userManager = userManager;
     }
 
     public async Task<User?> GetUserByEmail(string email)
     {
-        return await _userManager.FindByEmailAsync(email);
+        return await _userManager
+        .FindByEmailAsync(email);
     }
 
     public async Task<IdentityResult> CreateUser(CreateUserDTO userDto)
