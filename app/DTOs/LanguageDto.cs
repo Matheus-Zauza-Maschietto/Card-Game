@@ -5,4 +5,4 @@ using System.Threading.Tasks;
 
 namespace app.DTOs;
 
-public record class LanguageDto(string LanguageName);
+public record class LanguageDto(string LanguageName, int Id);

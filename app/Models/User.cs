@@ -13,12 +13,12 @@ public class User : IdentityUser
     public Language Language { get; set; }
     public ICollection<Deck> Decks { get; set; }
 
-    public User(string email, string username, string role, string language)
+    public User(string email, string username, string role, int languageId)
     {
         Email = email;
         UserName = username;
         Role = role;
-        Language = new Language(language);
+        LanguageId = languageId;
     }
 
     public User()

@@ -16,8 +16,9 @@ public class Language
         
     }
 
-    public Language(string languageName)
+    public Language(int id, string languageName)
     {
+        Id = id;
         LanguageName = languageName;
     }
 }

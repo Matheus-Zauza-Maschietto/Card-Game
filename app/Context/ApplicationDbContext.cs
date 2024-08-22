@@ -42,10 +42,6 @@ public class ApplicationDbContext : IdentityDbContext<User>
         .HasMany(e => e.Cards)
         .WithMany(e => e.Decks)
         .UsingEntity<DeckCard>();
-
-        // builder.Entity<Deck>()
-        // .HasOne(e => e.CommanderCard)
-        // .WithOne();
         
         builder.Entity<Card>()
         .HasMany(e => e.Colors)
@@ -115,6 +111,24 @@ public class ApplicationDbContext : IdentityDbContext<User>
         .HasMany(e => e.Decks)
         .WithOne(e => e.User);
 
+        builder.Entity<User>()
+        .Navigation(e => e.Language)
+        .AutoInclude();
+
+
+        builder.Entity<Language>().HasData(
+            new Language(11, "English"),
+            new Language(1,"German"),
+            new Language(2,"Spanish"),
+            new Language(3,"French"),
+            new Language(4,"Italian"),
+            new Language(5,"Japanese"),
+            new Language(6,"Korean"),
+            new Language(7,"Portuguese (Brazil)"),
+            new Language(8,"Russian"),
+            new Language(9,"Chinese Simplified"),
+            new Language(10,"Chinese Traditional")
+        );
 
         base.OnModelCreating(builder);
     }

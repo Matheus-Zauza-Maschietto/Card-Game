@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "DytlRipLvTGpnQ4KRrkbjD3GweIxiCW4F8jloYTNlOSFBmqf62qCyycALPrdn4XsbB64Kd22GNGw2jMYaRS5Qw==",
+  "dgSpecHash": "0LuvLW6U1gstN580DwabVlULO8cdvXA+B0u3VkEWqYZeYplmDpVDXp9LZfOagAvUmWCMMM3UysjJPnrJZKrutg==",
   "success": true,
   "projectFilePath": "/home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/app.Tests.csproj",
   "expectedPackageFiles": [
     "/home/maquina-de-guerra/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/home/maquina-de-guerra/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
     "/home/maquina-de-guerra/.nuget/packages/coverlet.collector/6.0.0/coverlet.collector.6.0.0.nupkg.sha512",
+    "/home/maquina-de-guerra/.nuget/packages/fluentvalidation/11.9.2/fluentvalidation.11.9.2.nupkg.sha512",
+    "/home/maquina-de-guerra/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.9.2/fluentvalidation.dependencyinjectionextensions.11.9.2.nupkg.sha512",
     "/home/maquina-de-guerra/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/8.0.8/microsoft.aspnetcore.authentication.jwtbearer.8.0.8.nupkg.sha512",
     "/home/maquina-de-guerra/.nuget/packages/microsoft.aspnetcore.cryptography.internal/8.0.8/microsoft.aspnetcore.cryptography.internal.8.0.8.nupkg.sha512",
     "/home/maquina-de-guerra/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/8.0.8/microsoft.aspnetcore.cryptography.keyderivation.8.0.8.nupkg.sha512",

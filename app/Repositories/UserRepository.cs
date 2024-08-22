@@ -20,13 +20,12 @@ public class UserRepository: IUserRepository
 
     public async Task<User?> GetUserByEmail(string email)
     {
-        return await _userManager
-        .FindByEmailAsync(email);
+        return await _userManager.FindByEmailAsync(email);
     }
 
     public async Task<IdentityResult> CreateUser(CreateUserDTO userDto)
     {
-        User newUser = new User(userDto.Email, userDto.UserName, string.Empty, userDto.Language);
+        User newUser = new User(userDto.Email, userDto.UserName, string.Empty, userDto.LanguageId);
 
         return await _userManager.CreateAsync(newUser, userDto.Password);
     }

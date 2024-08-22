@@ -25,5 +25,5 @@ namespace app.Helper;
             builder.Services.AddScoped<ICardRepository, CardRepository>();
             builder.Services.AddScoped<ICardApiRepository, CardApiRepository>();
             builder.Services.AddScoped<IDeckCardRepository, DeckCardRepository>();
-        }
+        }   
     }

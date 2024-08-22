@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using app.Context;
 
@@ -11,9 +12,11 @@ using app.Context;
 namespace app.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240821223148_adding-auto-include")]
+    partial class addingautoinclude
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -421,63 +424,6 @@ namespace app.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 11,
-                            LanguageName = "English"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            LanguageName = "German"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            LanguageName = "Spanish"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            LanguageName = "French"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            LanguageName = "Italian"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            LanguageName = "Japanese"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            LanguageName = "Korean"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            LanguageName = "Portuguese (Brazil)"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            LanguageName = "Russian"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            LanguageName = "Chinese Simplified"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            LanguageName = "Chinese Traditional"
-                        });
                 });
 
             modelBuilder.Entity("app.Models.Legality", b =>

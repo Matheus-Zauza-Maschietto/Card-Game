@@ -18,6 +18,6 @@ public class LanguageService
     public async Task<ICollection<LanguageDto>> GetLanguageDtosAsync()
     {
         var languages = await _languageRepository.GetAllLanguagesAsync();
-        return languages.Select(l => new LanguageDto(l.LanguageName)).ToList();
+        return languages.Select(l => new LanguageDto(l.LanguageName, l.Id)).ToList();
     }
 }
