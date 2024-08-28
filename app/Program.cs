@@ -1,6 +1,7 @@
 using System.Text;
 using app.Context;
 using app.Helper;
+using app.Helpers;
 using app.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -42,5 +43,5 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
-
+app.ConfigureInitialMigration();
 app.Run();

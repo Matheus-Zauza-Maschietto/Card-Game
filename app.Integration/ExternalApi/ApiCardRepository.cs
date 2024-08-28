@@ -9,7 +9,7 @@ using app.Repositories.Interfaces;
 
 namespace app.Repositories;
 
-public class CardApiRepository : ICardApiRepository
+public class CardApiRepository :  ICardApiRepository
 {
     private readonly HttpClient _magicHttpClient;
     public CardApiRepository(IHttpClientFactory factory)
@@ -45,10 +45,5 @@ public class CardApiRepository : ICardApiRepository
         string content = await response.Content.ReadAsStringAsync();
         MagicCardListResponse? card = JsonSerializer.Deserialize<MagicCardListResponse>(content);
         return card?.cards;
-    }
-
-    public async Task<ICollection<ApiMagicCard>?> GetOneHundredCardsByColorsAsync(ICollection<string> colorList)
-    {
-        throw new NotImplementedException();
     }
 }

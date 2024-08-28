@@ -10,7 +10,7 @@ using app.Repositories.Interfaces;
 
 namespace app.Services;
 
-public class DeckService
+public class  DeckService
 {
     private readonly CardService _cardService;
     private readonly IDeckRepository _deckRepository;

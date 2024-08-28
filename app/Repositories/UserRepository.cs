@@ -23,7 +23,7 @@ public class UserRepository: IUserRepository
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<IdentityResult> CreateUser(CreateUserDTO userDto)
+    public async Task<IdentityResult>  CreateUser(CreateUserDTO userDto)
     {
         User newUser = new User(userDto.Email, userDto.UserName, string.Empty, userDto.LanguageId);
 
