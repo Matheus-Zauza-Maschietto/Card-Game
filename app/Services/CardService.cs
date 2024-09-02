@@ -9,7 +9,7 @@ using app.Repositories.Interfaces;
 
 namespace app.Services;
 
-public class CardService
+public class  CardService
 {
     private readonly ICardApiRepository _cardApiRepository;
     private readonly ICardRepository _cardRepository;

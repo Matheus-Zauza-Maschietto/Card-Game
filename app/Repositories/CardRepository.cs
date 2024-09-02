@@ -8,8 +8,7 @@ using app.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.Repositories;
-
-public class CardRepository : ICardRepository
+ public class CardRepository : ICardRepository
 {
     private readonly DbSet<Card> _cardContext;
     private readonly ApplicationDbContext _context;
