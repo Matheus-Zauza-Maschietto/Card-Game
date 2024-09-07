@@ -1,6 +1,6 @@
 # Card Game
 
-Card Game é uma web api que tem como objetivo gerar baralhos aleatórios através de um *commander*
+Card Game é uma web api que tem como objetivo gerar baralhos de magic de forma aleatórios através de um *commander*.
 
 ## Diagrama de Classes
 ![Diagrama de classes](./Documentation/classDiagram.jpeg)
