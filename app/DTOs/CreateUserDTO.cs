@@ -5,4 +5,4 @@ using System.Threading.Tasks;
 
 namespace app.DTOs;
 
-public record CreateUserDTO(string Email, string UserName, int LanguageId, string Password);
+public record CreateUserDTO(string Email, string UserName, int LanguageId, string Password, bool IsAdmin);

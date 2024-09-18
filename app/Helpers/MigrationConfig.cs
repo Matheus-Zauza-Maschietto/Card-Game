@@ -14,8 +14,8 @@ public static class MigrationConfig
         using var serviceScope = app.Services.CreateScope();
 
         try{
-            ApplicationDbContext context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-            context.Database.Migrate();
+            using ApplicationDbContext? context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            context?.Database.Migrate();
         }
         catch(Exception ex){
             Console.WriteLine(ex.Message);

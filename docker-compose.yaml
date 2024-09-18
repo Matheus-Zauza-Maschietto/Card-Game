@@ -9,8 +9,12 @@ services:
       - MSSQL_SA_PASSWORD=Senha123!
     networks:
       - "cardgame"
-    # volumes:
-    #    - "./db_volume:/mssql/data"
+  cache:
+    container_name: cardgame-cache
+    image: redis:latest  
+    ports:
+      - "6379:6379"  
+    restart: always
 
   # backend:
   #   depends_on:
@@ -29,5 +33,3 @@ services:
 networks:
   cardgame:
     driver: bridge
-volumes:
-  db_volume:

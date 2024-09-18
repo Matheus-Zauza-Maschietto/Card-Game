@@ -28,6 +28,8 @@ builder.ConfigureAuthorization();
 
 builder.ConfigureSwaggerUI();
 
+builder.ConfigureRedisCache();
+
 var app = builder.Build();
 
 app.UseCors(cr =>
@@ -37,9 +39,10 @@ app.UseCors(cr =>
     cr.AllowAnyOrigin();
 });
 
+app.ConfigureInitialMigration();
 app.UseSwagger();
 app.UseSwaggerUI();
-
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();

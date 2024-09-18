@@ -23,10 +23,29 @@ public class UserRepository: IUserRepository
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<IdentityResult>  CreateUser(CreateUserDTO userDto)
+    public async Task<IdentityResult>  CreateUser(User newUser, string password)
     {
-        User newUser = new User(userDto.Email, userDto.UserName, string.Empty, userDto.LanguageId);
-
-        return await _userManager.CreateAsync(newUser, userDto.Password);
+        return await _userManager.CreateAsync(newUser, password);
     }
+
+    public async Task<IdentityResult> DeleteUserById(User user)
+    {
+        return await _userManager.DeleteAsync(user);
+    }
+
+    public async Task<bool> CheckPassword(User foundedUser, string password)
+    {
+        return await _userManager.CheckPasswordAsync(foundedUser, password);
+    }
+
+    public async Task<IdentityResult> AddRoleToUserAsync(string role, User user)
+    {
+        return await _userManager.AddToRoleAsync(user, role);
+    }
+
+    public async Task<IList<string>> GetRolesFromUserAsync(User user)
+    {
+        return await _userManager.GetRolesAsync(user);
+    }
+
 }

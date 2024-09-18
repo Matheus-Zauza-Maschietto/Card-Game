@@ -21,4 +21,5 @@ public class DeckCardService
     {
         return deck?.DeckCards?.FirstOrDefault(p => p.IsCommander == true);
     }
+
 }

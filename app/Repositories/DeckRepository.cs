@@ -19,6 +19,11 @@ public class DeckRepository : IDeckRepository
         _deckContext = context.Decks;
     }
 
+    public async Task<ICollection<Deck>> GetAllDecksAsync()
+    {
+        return _deckContext.AsNoTracking().ToList();
+    }
+
     public async Task<ICollection<Deck>> GetAllDecksByUserAsync(User user)
     {
         return await _deckContext.AsNoTracking().Where(p => p.User == user).ToListAsync();
@@ -32,28 +37,32 @@ public class DeckRepository : IDeckRepository
 
     public async Task<Deck?> GetDeckByUserAndIdUsingIncludesAsync(User user, Guid id)
     {
-        return await _deckContext.AsNoTracking()
-        .Include(e => e.DeckCards)
-        .ThenInclude(p => p.Card)
-        .ThenInclude(e => e.Colors)
-        .Include(e => e.DeckCards)
-        .ThenInclude(p => p.Card)
-        .ThenInclude(e => e.Legalities)
-        .Include(e => e.DeckCards)
-        .ThenInclude(p => p.Card)
-        .ThenInclude(e => e.Types)
-        .Include(e => e.DeckCards)
-        .ThenInclude(p => p.Card)
-        .ThenInclude(e => e.Subtypes)
-        .Include(e => e.DeckCards)
-        .ThenInclude(p => p.Card)
-        .ThenInclude(e => e.CardPrintings)
-        .Include(e => e.DeckCards)
-        .ThenInclude(p => p.Card)
-        .ThenInclude(e => e.ForeignNames)
-        .Include(e => e.User)
-        .ThenInclude(e => e.Language)
-        .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Id == id);
+            return await _deckContext.AsNoTracking()
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.Colors)
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.Printings)
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.Legalities)
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.Types)
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.Subtypes)
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.CardPrintings)
+                .Include(e => e.DeckCards)
+                    .ThenInclude(p => p.Card)
+                        .ThenInclude(e => e.ForeignNames)
+                .Include(e => e.User)
+                    .ThenInclude(e => e.Language)
+                .AsSplitQuery()  
+                .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Id == id);
     }
 
     public async Task<Deck> CreateDeckAsync(Deck deck)

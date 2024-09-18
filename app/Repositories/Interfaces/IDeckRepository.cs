@@ -8,6 +8,7 @@ namespace app.Repositories.Interfaces;
 
 public interface IDeckRepository
 {
+    Task<ICollection<Deck>> GetAllDecksAsync();
     Task<ICollection<Deck>> GetAllDecksByUserAsync(User user);
     Task<Deck?> GetDeckByUserAndIdAsync(User user, Guid id);
     Task<Deck?> GetDeckByUserAndIdUsingIncludesAsync(User user, Guid id);

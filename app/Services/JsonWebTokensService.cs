@@ -62,45 +62,6 @@ public class JsonWebTokensService
         return TokenHandler.WriteToken(pretoken);
     }
 
-    public string GerarRefreshToken()
-    {
-        var randomNumber = new byte[64];
-        using var rng = RandomNumberGenerator.Create();
-        rng.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
-    }
-
-    public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
-    {
-        token = CleanUpToken(token);
-        TokenValidationParameters tokenValidationParameters = new()
-        {
-            ValidateActor = true,
-            ValidateAudience = true,
-            ValidateIssuer = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = _configuration["JwtBearerTokenSettings:Issuer"] ?? "Issuer not found",
-            ValidAudience = _configuration["JwtBearerTokenSettings:Audience"] ?? "Audience not found",
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_configuration["JwtBearerTokenSettings:SecretKey"] ?? "SecretKey not found")
-            )
-        };
-
-        JwtSecurityTokenHandler tokenHandler = new();
-
-        SecurityToken securityToken;
-
-        ClaimsPrincipal principal = tokenHandler.ValidateToken(token, tokenValidationParameters,
-                        out securityToken);
-
-        if (securityToken is not JwtSecurityToken jwtSecurityToken ||
-                  !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
-                                 StringComparison.InvariantCultureIgnoreCase))
-            throw new SecurityTokenException("Token Invalido");
-
-        return principal;
-    }
-
     private string? CleanUpToken(string? token)
     {
         token = Regex.Replace(token, "bearer ", "", RegexOptions.IgnoreCase);

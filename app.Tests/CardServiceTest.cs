@@ -20,11 +20,13 @@ public class CardServiceTest
         _cardApiRepository = Substitute.For<ICardApiRepository>();
     }
 
-    private static IEnumerable<object[]> GetCardByIdAsync_FoundCenarios_Data(){
+    public static IEnumerable<object[]> GetCardByIdAsync_FoundCenarios_Data(){
         List<object[]> data = new ();
         Card card = new Card(){
-
+            
         };
+
+        return data;
     }
 
     [Theory]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using app.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +20,10 @@ public static class AuthorizationConfig
             .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
             .RequireAuthenticatedUser()
             .Build();
+
+            options.AddPolicy(Roles.ADMIN.ToString(), p => {
+                p.RequireRole(Roles.ADMIN.ToString());
+            });
         });
 
         builder.Services.AddAuthentication(options =>
