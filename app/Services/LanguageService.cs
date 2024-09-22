@@ -19,14 +19,9 @@ public class LanguageService
 
     public async Task<ICollection<LanguageDto>> GetLanguageDtosAsync()
     {
-        ICollection<LanguageDto>? languagesDTOs = await _redisRepository.GetCacheAsync<ICollection<LanguageDto>>("languages");
-        if(languagesDTOs is not null)
-            return languagesDTOs;
-
         var languages = await _languageRepository.GetAllLanguagesAsync();
         
-        languagesDTOs = languages.Select(l => new LanguageDto(l.LanguageName, l.Id)).ToList();
-        _redisRepository.SetCacheAsync("languages", languagesDTOs, TimeSpan.FromHours(1));
+        ICollection<LanguageDto>? languagesDTOs = languages.Select(l => new LanguageDto(l.LanguageName, l.Id)).ToList();
 
         return languagesDTOs;
     }

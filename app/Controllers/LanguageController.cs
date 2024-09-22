@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app.DTOs;
+using app.Repositories.Interfaces;
 using app.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +16,11 @@ namespace app.Controllers
     public class LanguageController : ControllerBase
     {
         private readonly LanguageService _languageService;
-        public LanguageController(LanguageService languageService)
+        private readonly IRedisRepository _cache;
+        public LanguageController(LanguageService languageService, IRedisRepository cache)
         {
             _languageService = languageService;
+            _cache = cache;
         }
 
         [HttpGet()]
@@ -25,7 +28,12 @@ namespace app.Controllers
         {
             try
             {
-                ICollection<LanguageDto> languages = await _languageService.GetLanguageDtosAsync();
+                ICollection<LanguageDto>? languages = await _cache.GetCacheAsync<ICollection<LanguageDto>>("languages");
+                if(languages is not null)
+                    return Ok(languages);
+
+                languages = await _languageService.GetLanguageDtosAsync();
+                _cache.SetCacheAsync("languages", languages, TimeSpan.FromHours(1));
                 return Ok(languages);
             }
             catch (Exception ex)

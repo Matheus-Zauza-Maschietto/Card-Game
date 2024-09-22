@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using app.DTOs;
 using app.Enums;
 using app.Services;
+using app.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,10 +24,11 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<IActionResult> CreateUserAsync(CreateUserDTO userDTO)
+    public async Task<IActionResult> CreateUserAsync(CreateUserDTO userDTO, CreateUserDTOValidator validator)
     {
         try
         {
+            validator.ValidateAndThrow(userDTO);
             await _userService.CreateUser(userDTO);
             return Ok("Usuario criado com sucesso");
         }
@@ -36,10 +39,11 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("Login")]
-    public async Task<IActionResult> LoginUserAsync(LoginUserDTO loginDTO)
+    public async Task<IActionResult> LoginUserAsync(LoginUserDTO loginDTO, LoginUserDTOValidator validator)
     {
         try
         {
+            validator.ValidateAndThrow(loginDTO);
             string token = await _userService.LoginUser(loginDTO);
             return Ok(token);
         }

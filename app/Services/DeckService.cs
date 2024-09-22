@@ -23,45 +23,33 @@ public class  DeckService
         UserService userService, 
         CardService cardService, 
         IDeckCardRepository deckCardRepository, 
-        ILanguageRepository languageRepository,
-        IRedisRepository cache)
+        ILanguageRepository languageRepository
+    )
     {
         _deckCardRepository = deckCardRepository;
         _deckRepository = deckRepository;
         _userService = userService;
         _cardService = cardService;
         _languageRepository = languageRepository;
-        _cache = cache;
     }
 
 
     public async Task<ICollection<Deck>> GetDecksAsync(string userEmail)
     {
-        ICollection<Deck>? decks = await _cache.GetCacheAsync<ICollection<Deck>>($"decks:user:{userEmail}");
-        if(decks is not null)
-            return decks;
-
         User? user = await _userService.GetUserByEmail(userEmail);
-        decks = await _deckRepository.GetAllDecksByUserAsync(user);
-
-        _cache.SetCacheAsync($"decks:user:{userEmail}", decks, TimeSpan.FromSeconds(10));
+        ICollection<Deck>? decks = await _deckRepository.GetAllDecksByUserAsync(user);
         return decks;        
     }
 
     public async Task<Deck?> GetDecksByIdAsync(string userEmail, Guid id)
     {
-        Deck? deck = await _cache.GetCacheAsync<Deck>($"decks:{id}:user:{userEmail}");
-        if(deck is not null)
-            return deck;
-
         User? user = await _userService.GetUserByEmail(userEmail);
-        deck = await _deckRepository.GetDeckByUserAndIdUsingIncludesAsync(user, id);
+        Deck? deck = await _deckRepository.GetDeckByUserAndIdUsingIncludesAsync(user, id);
 
         if(deck is null){
             throw new Exception("Deck not found");
         }
 
-        _cache.SetCacheAsync($"decks:{id}:user:{userEmail}", deck, TimeSpan.FromSeconds(20));
         return deck;
     }
 
@@ -115,13 +103,7 @@ public class  DeckService
 
     public async Task<ICollection<Deck>> GetAllDecksAsync()
     {
-        ICollection<Deck>? decks =  await _cache.GetCacheAsync<ICollection<Deck>>("decks");
-        if(decks is not null)
-            return decks;
-
-        decks = await _deckRepository.GetAllDecksAsync();
-        _cache.SetCacheAsync("decks", decks, TimeSpan.FromMinutes(1));
-
+        ICollection<Deck>? decks = await _deckRepository.GetAllDecksAsync();
         return decks;
     }
 }

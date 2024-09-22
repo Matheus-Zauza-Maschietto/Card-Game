@@ -11,15 +11,21 @@ namespace app.Services;
 
 public class DeckCardService
 {
-
-    public DeckCardService()
+    private readonly IRedisRepository _cache;
+    public DeckCardService(IRedisRepository cache)
     {
-
+        _cache = cache;
     }
 
-    public DeckCard? GetDeckCardCommanderByDeck(Deck deck)
+    public async Task<DeckCard?> GetDeckCardCommanderByDeck(Deck deck)
     {
-        return deck?.DeckCards?.FirstOrDefault(p => p.IsCommander == true);
+        DeckCard? deckCard = await _cache.GetCacheAsync<DeckCard>($"deck:{deck.Id}:commander");
+        if(deckCard is not null)
+            return deckCard;
+
+        deckCard = deck?.DeckCards?.FirstOrDefault(p => p.IsCommander == true);
+        _cache.SetCacheAsync($"deck:{deck.Id}:commander", deckCard, TimeSpan.FromMinutes(1));
+        return deckCard;
     }
 
 }

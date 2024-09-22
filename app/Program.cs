@@ -30,6 +30,8 @@ builder.ConfigureSwaggerUI();
 
 builder.ConfigureRedisCache();
 
+builder.ConfigureValidators();
+
 var app = builder.Build();
 
 app.UseCors(cr =>

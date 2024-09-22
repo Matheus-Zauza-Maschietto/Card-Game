@@ -21,7 +21,7 @@ public class  CardService
 
     public async Task<Card?> GetCardByIdAsync(Guid id)
     {
-        var card = await _cardRepository.GetCardByIdAsync(id);
+        Card? card = await _cardRepository.GetCardByIdAsync(id);
         if (card is not null)
         {
             return card;
@@ -33,7 +33,7 @@ public class  CardService
             throw new Exception("Card not found");
         }
 
-        var createdCard = await CreateCardAsync(new Card(apiCard));
+        Card? createdCard = await CreateCardAsync(new Card(apiCard!));
         return createdCard;
     }
 
