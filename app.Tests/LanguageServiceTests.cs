@@ -10,17 +10,31 @@ using NSubstitute;
 
 namespace app.Tests;
 
-public class LanguageServiceTests
+public class LanguageServiceFixture 
 {
+    public ILanguageRepository ILanguageRepository { get; private set; }    
+    public LanguageServiceFixture()
+    {
+        ILanguageRepository = Substitute.For<ILanguageRepository>();
+    }
+}
+
+public class LanguageServiceTests : IClassFixture<LanguageServiceFixture>
+{
+    private readonly LanguageServiceFixture _fixture;
+    public LanguageServiceTests(LanguageServiceFixture fixture)
+    {
+        _fixture = fixture;    
+    }
+
     [Fact]
     public async void GetLanguageDtosAsync_GetManyLanguages_ReturnsManyLanguages()
     {
-        ILanguageRepository languageRepository = Substitute.For<ILanguageRepository>();
         List<Language> languagesMock = new List<Language>() {
             new Language() { LanguageName = "Portugues" }
         };
-        languageRepository.GetAllLanguagesAsync().Returns(languagesMock);
-        LanguageService service = new LanguageService(languageRepository, Substitute.For<IRedisRepository>());
+        _fixture.ILanguageRepository.GetAllLanguagesAsync().Returns(languagesMock);
+        LanguageService service = new LanguageService(_fixture.ILanguageRepository, Substitute.For<IRedisRepository>());
 
         ICollection<LanguageDto> languages = await service.GetLanguageDtosAsync();
 
