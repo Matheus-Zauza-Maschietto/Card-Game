@@ -17,7 +17,6 @@ public class  DeckService
     private readonly IDeckCardRepository _deckCardRepository;
     private readonly UserService _userService;
     private readonly ILanguageRepository _languageRepository; 
-    private readonly IRedisRepository _cache;
     public DeckService(
         IDeckRepository deckRepository, 
         UserService userService, 

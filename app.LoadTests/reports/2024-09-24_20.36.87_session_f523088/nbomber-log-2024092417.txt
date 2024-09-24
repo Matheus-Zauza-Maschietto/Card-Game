@@ -1,0 +1,11 @@
+2024-09-24 17:36:14.962 -03:00 [INF] [ThreadId:5] NBomber 5.7.0 started a new session: 2024-09-24_20.36.87_session_f523088
+2024-09-24 17:36:14.992 -03:00 [INF] [ThreadId:5] NBomber started as single node
+2024-09-24 17:36:14.997 -03:00 [INF] [ThreadId:5] License validation....
+2024-09-24 17:36:14.999 -03:00 [WRN] [ThreadId:5] THIS VERSION IS FREE ONLY FOR PERSONAL USE. You can't use it for an organization.
+2024-09-24 17:36:15.056 -03:00 [INF] [ThreadId:5] Reports folder: /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/bin/Debug/net8.0/reports/2024-09-24_20.36.87_session_f523088
+2024-09-24 17:36:15.057 -03:00 [INF] [ThreadId:5] Plugins: no plugins were loaded
+2024-09-24 17:36:15.058 -03:00 [INF] [ThreadId:5] Reporting sinks: no reporting sinks were loaded
+2024-09-24 17:36:15.059 -03:00 [INF] [ThreadId:5] Starting init...
+2024-09-24 17:36:15.077 -03:00 [INF] [ThreadId:5] Target scenarios: Teste de carga de endpoint de busca de deck por id
+2024-09-24 17:36:15.082 -03:00 [INF] [ThreadId:5] Init finished
+2024-09-24 17:36:15.139 -03:00 [INF] [ThreadId:5] Starting bombing...

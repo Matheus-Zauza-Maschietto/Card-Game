@@ -27,5 +27,6 @@ namespace app.Helper;
             builder.Services.AddScoped<ICardApiRepository, CardApiRepository>();
             builder.Services.AddScoped<IDeckCardRepository, DeckCardRepository>();
             builder.Services.AddSingleton<IRedisRepository, RedisRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
         }   
     }

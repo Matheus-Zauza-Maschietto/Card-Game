@@ -4,23 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using app.Enums;
 using app.Models;
+using app.Repositories;
+using app.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace app.Services;
 
 public class RoleService
 {
-    private readonly RoleManager<IdentityRole> _roleManager;
-    public RoleService(RoleManager<IdentityRole> roleManager)
+    private readonly IRoleRepository _roleRepository;
+    public RoleService(IRoleRepository roleRepository)
     {
-        _roleManager = roleManager;
+        _roleRepository = roleRepository;
     }
 
     public async Task CreateRoleIfNotExistisAsync()
     {
-        if (!await _roleManager.RoleExistsAsync(Roles.ADMIN.ToString()))
+        if (!await _roleRepository.VerifyIfRoleExistsAsync(Roles.ADMIN.ToString()))
         {
-            await _roleManager.CreateAsync(new IdentityRole(Roles.ADMIN.ToString()));
+            await _roleRepository.CreateRoleAsync(new IdentityRole(Roles.ADMIN.ToString()));
         }
     }
 
