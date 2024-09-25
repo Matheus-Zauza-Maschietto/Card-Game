@@ -1,2 +1,0 @@
-test_suite,test_name,scenario,duration,step_name,request_count,ok,failed,rps,min,mean,max,50_percent,75_percent,95_percent,99_percent,std_dev,data_transfer_min_kb,data_transfer_mean_kb,data_transfer_max_kb,data_transfer_all_mb
-nbomber_default_test_suite_name,nbomber_default_test_name,Teste de carga de endpoint de busca de deck por id,00:01:00,global information,40000,39576,424,659.6,298.25,5207.15,48299.43,5160.96,6230.02,7753.73,8380.42,2652.35,0,0,0,0
