@@ -17,8 +17,8 @@ string token = await response.Content.ReadAsStringAsync();
 httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"bearer {token}");
 
 HttpResponseMessage responseCard = await CreateDeck(token);
-string content = await responseCard.Content.ReadAsStringAsync();
-DeckDTO? deckCreated = JsonSerializer.Deserialize<DeckDTO>(content);
+DeckDTO? deckCreated = await responseCard.Content.ReadFromJsonAsync<DeckDTO>();
+//DeckDTO? deckCreated = JsonSerializer.Deserialize<DeckDTO>(content);
 
 var scenario = Scenario.Create("Teste de carga de endpoint de busca de deck por id", async context =>
     {
@@ -35,9 +35,9 @@ var scenario = Scenario.Create("Teste de carga de endpoint de busca de deck por 
             during: TimeSpan.FromMinutes(1))
     );
     
-    NBomberRunner
-        .RegisterScenarios(scenario)
-        .Run();
+NBomberRunner
+    .RegisterScenarios(scenario)
+    .Run();
 
 async Task<HttpResponseMessage> LoginWithUser()
 {
