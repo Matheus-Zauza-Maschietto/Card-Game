@@ -20,9 +20,9 @@ Card Game é uma web api que tem como objetivo gerar baralhos de magic de forma 
 ![Diagrama de classes](./Documentation/classDiagram.jpeg)
 
 ## Cache
-Um ponto muito interessante de se observar é a performance da api em um comparativo com cache e sem cache
-A api sem cache foi capaz de receber aproximadamente 8500 requisições no periodo de 1 minuto, sendo que menos de 10% dessas requisições de fato foram antendidas.
-Porem quando utilizamos o cache como ferramente de otimização, a api foi capaz de atender 30 mil requisições no periodo de 1 minuto, sendo que que 95% dessas requisições foram atendidas.
+Um ponto muito interessante de se observar é a performance da api em um comparativo com cache e sem cache. <br>
+A api sem cache foi capaz de receber aproximadamente 8500 requisições no periodo de 1 minuto, sendo que menos de 10% dessas requisições de fato foram atendidas.
+Porem quando utilizamos o cache como ferramente de otimização, a api foi capaz de atender 30 mil requisições no periodo de 1 minuto, sendo que que 95% dessas requisições foram atendidas.<br>
 Estarei deixando a baixo a referência gerada pelo NBomber durante o teste de carga
 ![Teste de carga sem cache](./Documentation/testeDeCargaSemCache.png)
 ![Teste de carga com cache](./Documentation/testeDeCargaComCache.png)
