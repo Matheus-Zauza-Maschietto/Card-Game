@@ -18,7 +18,6 @@ httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"bear
 
 HttpResponseMessage responseCard = await CreateDeck(token);
 DeckDTO? deckCreated = await responseCard.Content.ReadFromJsonAsync<DeckDTO>();
-//DeckDTO? deckCreated = JsonSerializer.Deserialize<DeckDTO>(content);
 
 var scenario = Scenario.Create("Teste de carga de endpoint de busca de deck por id", async context =>
     {

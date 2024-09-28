@@ -11,25 +11,29 @@ services:
       - "cardgame"
   cache:
     container_name: cardgame-cache
-    image: redis:latest  
+    image: redis:latest
+    networks:
+      - "cardgame"
     ports:
       - "6379:6379"  
     restart: always
 
-  # backend:
-  #   depends_on:
-  #     - database
-  #   container_name: "cardgame-backend"
-  #   build: "."
-  #   ports:
-  #     - 8080:8080
-  #   networks:
-  #     - "cardgame"
-  #   environment:
-  #     - "ConnectionStrings__DefaultConnection=Server=cardgame-database;Database=master;User Id=sa;Password=Senha123!;MultipleActiveResultSets=true;Encrypt=YES;TrustServerCertificate=YES"
-  #   command: >
-  #     sh -c "dotnet ef database update -p app --no-build &&
-  #            dotnet run"
+  backend:
+    depends_on:
+      - database
+      - cache
+    container_name: "cardgame-backend"
+    build: "."
+    ports:
+      - 8080:8080
+    networks:
+      - "cardgame"
+    environment:
+      - "ConnectionStrings__DatabaseDefaultConnection=Server=cardgame-database;Database=master;User Id=sa;Password=Senha123!;MultipleActiveResultSets=true;Encrypt=YES;TrustServerCertificate=YES"
+      - "ConnectionStrings__CacheDefaultConnection=cardgame-cache"
+    command: >
+      sh -c "dotnet ef database update -p app --no-build &&
+             dotnet run"
 networks:
   cardgame:
     driver: bridge

@@ -16,6 +16,7 @@ public static class MigrationConfig
         try{
             using ApplicationDbContext? context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
             context?.Database.Migrate();
+            Console.WriteLine("Migração feita com sucesso");
         }
         catch(Exception ex){
             Console.WriteLine(ex.Message);

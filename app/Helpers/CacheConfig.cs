@@ -11,7 +11,7 @@ public static class CacheConfig
     {
         builder.Services.AddStackExchangeRedisCache(options =>
         {
-            options.Configuration = "localhost:6379";
+            options.Configuration = builder.Configuration.GetConnectionString("CacheDefaultConnection");
             options.InstanceName = "RedisInstance";
         });
     }

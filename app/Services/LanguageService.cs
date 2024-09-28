@@ -10,11 +10,9 @@ namespace app.Services;
 public class LanguageService
 {
     private readonly ILanguageRepository _languageRepository;   
-    private readonly IRedisRepository _redisRepository;
-    public LanguageService(ILanguageRepository languageRepository, IRedisRepository redisRepository)
+    public LanguageService(ILanguageRepository languageRepository)
     {
         _languageRepository = languageRepository;
-        _redisRepository = redisRepository;
     }
 
     public async Task<ICollection<LanguageDto>> GetLanguageDtosAsync()
