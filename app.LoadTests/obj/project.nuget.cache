@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MrEv1/STPy3ec2pKeKBWhkzvfLegxRBNS2Ux/Ajn/yrwNUBF2COdzbLSzj4TfhLGnKi9iNYpdsZYF3T7N0yeGg==",
+  "dgSpecHash": "BJ+8WtG5w5k=",
   "success": true,
   "projectFilePath": "/home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/app.LoadTests.csproj",
   "expectedPackageFiles": [
@@ -120,5 +120,46 @@
     "/home/maquina-de-guerra/.nuget/packages/system.xml.readerwriter/4.3.0/system.xml.readerwriter.4.3.0.nupkg.sha512",
     "/home/maquina-de-guerra/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MessagePack' 2.4.59 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4qm4-8hg2-g2xm",
+      "libraryId": "MessagePack",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Net.Http' 4.3.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-7jgj-8wvc-jh57",
+      "libraryId": "System.Net.Http",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Text.Json' 7.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'System.Text.RegularExpressions' 4.3.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-cmhx-cq75-c4mj",
+      "libraryId": "System.Text.RegularExpressions",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }

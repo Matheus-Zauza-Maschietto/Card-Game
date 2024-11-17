@@ -60,9 +60,9 @@
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.AssemblyInfo.cs
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.csproj.CoreCompileInputs.cache
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.sourcelink.json
-/home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.csproj.CopyComplete
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.dll
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/refint/app.LoadTests.dll
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.pdb
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.LoadTests.genruntimeconfig.cache
 /home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/ref/app.LoadTests.dll
+/home/maquina-de-guerra/Documents/github/Card-Game/app.LoadTests/obj/Debug/net8.0/app.Load.C2FDFD4E.Up2Date

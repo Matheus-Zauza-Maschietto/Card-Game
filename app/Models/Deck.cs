@@ -27,6 +27,13 @@ public class Deck
         Name = name;
         Cards = cards;
     }
-
+    
+    public Deck(User user, string name, Card commanderCard)
+    {
+        User = user;
+        UserId = user.Id;
+        Name = name;
+        Cards = new List<Card>(){ commanderCard };
+    }
 }
    

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using app.DTOs;
 using app.Models;
 using app.Repositories.Interfaces;
@@ -34,7 +30,7 @@ public class LanguageServiceTests : IClassFixture<LanguageServiceFixture>
             new Language() { LanguageName = "Portugues" }
         };
         _fixture.ILanguageRepository.GetAllLanguagesAsync().Returns(languagesMock);
-        LanguageService service = new LanguageService(_fixture.ILanguageRepository, Substitute.For<IRedisRepository>());
+        LanguageService service = new LanguageService(_fixture.ILanguageRepository);
 
         ICollection<LanguageDto> languages = await service.GetLanguageDtosAsync();
 

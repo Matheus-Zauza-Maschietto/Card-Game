@@ -77,6 +77,21 @@ public class DeckController : ControllerBase
             return Problem(ex.Message);
         }
     }
+    
+    [HttpPost("import")]
+    public async Task<IActionResult> ImportDeckAsync(ImportDeckDTO deckDTO, ImportDeckDTOValidator validator)
+    {
+        try
+        {
+            validator.ValidateAndThrow(deckDTO);
+            string? userEmailClaim = User.FindFirstValue(ClaimTypes.Email);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetDeckAsync(Guid id)

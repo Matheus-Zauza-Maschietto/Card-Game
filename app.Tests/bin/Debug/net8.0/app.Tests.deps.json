@@ -1700,7 +1700,10 @@
           "app.Integration": "1.0.0"
         },
         "runtime": {
-          "app.dll": {}
+          "app.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "app.Integration/1.0.0": {
@@ -1709,7 +1712,10 @@
           "Swashbuckle.AspNetCore": "6.7.0"
         },
         "runtime": {
-          "app.Integration.dll": {}
+          "app.Integration.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

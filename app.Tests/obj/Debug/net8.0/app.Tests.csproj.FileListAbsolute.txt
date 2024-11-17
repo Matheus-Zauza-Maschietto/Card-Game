@@ -3,7 +3,6 @@
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/app.runtimeconfig.json
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/appsettings.Development.json
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/appsettings.json
-/home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/exemplo.json
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/app
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/bin/Debug/net8.0/xunit.runner.reporters.netcoreapp10.dll
@@ -161,9 +160,9 @@
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.AssemblyInfo.cs
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.csproj.CoreCompileInputs.cache
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.sourcelink.json
-/home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.csproj.CopyComplete
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.dll
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/refint/app.Tests.dll
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.pdb
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.genruntimeconfig.cache
 /home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/ref/app.Tests.dll
+/home/maquina-de-guerra/Documents/github/Card-Game/app.Tests/obj/Debug/net8.0/app.Tests.csproj.Up2Date

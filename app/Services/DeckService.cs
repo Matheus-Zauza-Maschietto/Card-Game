@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app.DTOs;
+using app.Enums;
 using app.Integration.Models;
 using app.Models;
 using app.Repositories;
@@ -17,12 +18,14 @@ public class  DeckService
     private readonly IDeckCardRepository _deckCardRepository;
     private readonly UserService _userService;
     private readonly ILanguageRepository _languageRepository; 
+    private readonly KafkaService _kafkaService;
     public DeckService(
         IDeckRepository deckRepository, 
         UserService userService, 
         CardService cardService, 
         IDeckCardRepository deckCardRepository, 
-        ILanguageRepository languageRepository
+        ILanguageRepository languageRepository,
+        KafkaService kafkaService
     )
     {
         _deckCardRepository = deckCardRepository;
@@ -77,6 +80,26 @@ public class  DeckService
         return deletedDeck;
     }
 
+    public async Task<Deck> ImportDeckAsync(string userEmail, ImportDeckDTO importDeckDTO)
+    {
+        User? user = await _userService.GetUserByEmail(userEmail);
+        
+        Card? commanderCard = await _cardService.GetCardByIdAsync(importDeckDTO.CommanderCardId);
+        
+        Deck deck = new Deck(user, importDeckDTO.Name, commanderCard);
+        
+        Deck createdDeck = await _deckRepository.CreateDeckAsync(deck);
+        
+        _kafkaService.SendMessage(new ImportDeckKafkaMessage()
+        {
+            ImportCardDTO = importDeckDTO.CardsDTO,
+            User = user,
+            CreatedDeck = createdDeck
+        }, Topics.ImportDeckTopic);
+        
+        return createdDeck;
+    }
+    
     public async Task<Deck> CreateDeckAsync(string userEmail, CreateDeckDTO deckDto)
     {
         User? user = await _userService.GetUserByEmail(userEmail);
@@ -94,9 +117,7 @@ public class  DeckService
         if(deckCard is not null){
             await _deckCardRepository.SetDeckCommanderAsync(deckCard.Id);
         }
-
-        Language? userLanguage = await _languageRepository.GetLanguageByUserAsync(deck.User);
-
+        
         return deck;
     }
 
