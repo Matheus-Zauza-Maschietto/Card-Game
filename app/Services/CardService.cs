@@ -18,7 +18,7 @@ public class  CardService
         _cardRepository = cardRepository;
         _cardApiRepository = cardApiRepository;
     }
-
+    
     public async Task<Card?> GetCardByIdAsync(Guid id)
     {
         Card? card = await _cardRepository.GetCardByIdAsync(id);
@@ -76,6 +76,20 @@ public class  CardService
         List<Card> cards = await GetCardsAsync(apiCards);
         cards.Add(card);
 
+        return cards;
+    }
+
+    public async Task<ICollection<Card>> GetCardsByIdAsync(IEnumerable<Guid> cardsIds)
+    {
+        IEnumerable<Task<Card>> cardsTask = cardsIds.Select(id => GetCardByIdAsync(id));
+        await Task.WhenAll(cardsTask);
+
+        List<Card> cards = new List<Card>();
+        foreach (var cardTask in cardsTask)
+        {
+            if (cardTask.IsCompletedSuccessfully)
+                cards.Append(cardTask.Result);
+        }
         return cards;
     }
 

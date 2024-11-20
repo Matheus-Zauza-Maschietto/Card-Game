@@ -35,5 +35,11 @@ public class Deck
         Name = name;
         Cards = new List<Card>(){ commanderCard };
     }
+
+    public Deck ImportCards(ICollection<Card> cards)
+    {
+        Cards = cards;
+        return this;
+    }
 }
    

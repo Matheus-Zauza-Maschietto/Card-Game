@@ -11,7 +11,7 @@ public class KafkaService
         var config = new ProducerConfig { BootstrapServers = configuration["Kafka:BootstrapServers"] };
         _producer = new ProducerBuilder<Null, string>(config).Build();
     }
-    public async Task<DeliveryResult<Null, string>> SendMessage(object message, string topic)
+    public async Task<DeliveryResult<Null, string>> SendMessage<T>(T message, string topic)
     {
         string messageSerialized = JsonSerializer.Serialize(message);
         DeliveryResult<Null, string> result = await _producer.ProduceAsync(topic, new Message<Null, string> { Value = messageSerialized });

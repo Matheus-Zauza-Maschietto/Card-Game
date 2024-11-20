@@ -25,7 +25,9 @@ builder.ConfigureSwaggerUI();
 
 builder.ConfigureRedisCache();
 
-builder.ConfigureKafka();
+builder.ConfigureKafkaDependency();
+
+builder.ConfigureKafkaTopics();
 
 builder.ConfigureBackgroundJobs();
 

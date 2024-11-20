@@ -85,7 +85,9 @@ public class DeckController : ControllerBase
         {
             validator.ValidateAndThrow(deckDTO);
             string? userEmailClaim = User.FindFirstValue(ClaimTypes.Email);
-            return Ok();
+            Deck importedDeck = await _deckService.ImportDeckAsync(userEmailClaim ?? string.Empty, deckDTO);
+            
+            return Ok("Import has started.");
         }
         catch (Exception ex)
         {

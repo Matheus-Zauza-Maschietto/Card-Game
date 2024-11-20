@@ -28,6 +28,7 @@ public class  DeckService
         KafkaService kafkaService
     )
     {
+        _kafkaService = kafkaService;
         _deckCardRepository = deckCardRepository;
         _deckRepository = deckRepository;
         _userService = userService;
@@ -93,8 +94,8 @@ public class  DeckService
         _kafkaService.SendMessage(new ImportDeckKafkaMessage()
         {
             ImportCardDTO = importDeckDTO.CardsDTO,
-            User = user,
-            CreatedDeck = createdDeck
+            UserId = user.Id,
+            CreatedDeckId = createdDeck.Id
         }, Topics.ImportDeckTopic);
         
         return createdDeck;
@@ -125,5 +126,24 @@ public class  DeckService
     {
         ICollection<Deck>? decks = await _deckRepository.GetAllDecksAsync();
         return decks;
+    }
+
+    public async Task<Deck> GetDeckByIdAsync(Guid id)
+    {
+        Deck? deck = await _deckRepository.GetDeckByIdAsync(id);
+
+        if (deck is null)
+        {
+            throw new Exception("Deck not found");
+        }
+
+        return deck;
+    }
+
+    public async Task<Deck> ImportCardsAsync(ICollection<Card> cardsImported, Guid deckId)
+    {
+        Deck deck = await GetDeckByIdAsync(deckId);
+        deck.ImportCards(cardsImported);
+        return await _deckRepository.UpdateDeckAsync(deck);
     }
 }

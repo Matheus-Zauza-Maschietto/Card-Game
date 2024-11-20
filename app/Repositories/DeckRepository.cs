@@ -29,6 +29,11 @@ public class DeckRepository : IDeckRepository
         return await _deckContext.AsNoTracking().Where(p => p.User == user).ToListAsync();
     }
 
+    public async Task<Deck?> GetDeckByIdAsync(Guid id)
+    {
+        return await _deckContext.Include(p => p.Cards).FirstOrDefaultAsync(p => p.Id == id);
+    }
+    
     public async Task<Deck?> GetDeckByUserAndIdAsync(User user, Guid id)
     {
         return await _deckContext

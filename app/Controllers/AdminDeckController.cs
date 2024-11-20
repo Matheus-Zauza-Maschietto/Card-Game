@@ -23,7 +23,11 @@ public class AdminDeckController : ControllerBase
         _deckService = deckService;
         _cache = cache;
     }
-
+    
+    [AllowAnonymous]
+    [HttpGet("/health-check")]
+    public IActionResult HealthCheck() => Ok();
+    
     
     [HttpGet()]
     public async Task<IActionResult> GetDecksAsync()

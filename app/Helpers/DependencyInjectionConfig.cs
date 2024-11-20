@@ -20,6 +20,7 @@ namespace app.Helper;
             builder.Services.AddScoped<DeckCardService>();
             builder.Services.AddScoped<DeckService>();
             builder.Services.AddScoped<CardService>();
+            builder.Services.AddScoped<KafkaService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
             builder.Services.AddScoped<IDeckRepository, DeckRepository>();

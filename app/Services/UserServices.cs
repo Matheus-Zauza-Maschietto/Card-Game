@@ -61,6 +61,17 @@ public class UserService
         return _webTokensService.GerarToken(GetClaims(loginDto, roles));
     }
 
+    public async Task<User> GetUserById(string id)
+    {
+        User? user = await _userRepository.GetUserById(id);
+
+        if(user is null){
+            throw new Exception("User not found");
+        }
+
+        return user;
+    }
+
     public async Task<User> GetUserByEmail(string email)
     {
         User? user = await _userRepository.GetUserByEmail(email);

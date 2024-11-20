@@ -10,7 +10,8 @@ namespace app.Repositories;
 
 public interface IUserRepository
 {
-    Task<User> GetUserByEmail(string email);
+    Task<User?> GetUserById(string id);
+    Task<User?> GetUserByEmail(string email);
     Task<IdentityResult> CreateUser(User newUser, string password);
     Task<IdentityResult> DeleteUserById(User user);
     Task<bool> CheckPassword(User foundedUser, string password);
