@@ -10,8 +10,8 @@ public class Deck
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public ICollection<Card> Cards { get; set; }
-    public ICollection<DeckCard> DeckCards { get; set; }
+    public ICollection<Card> Cards { get; set; } = new List<Card>();
+    public ICollection<DeckCard> DeckCards { get; set; } = new List<DeckCard>();
     public string UserId { get; set; }
     public User User { get; set; }
 
@@ -36,9 +36,9 @@ public class Deck
         Cards = new List<Card>(){ commanderCard };
     }
 
-    public Deck ImportCards(ICollection<Card> cards)
+    public Deck ImportCards(Card card)
     {
-        Cards = cards;
+        Cards.Add(card);
         return this;
     }
 }

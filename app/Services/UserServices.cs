@@ -26,12 +26,7 @@ public class UserService
         {
             throw new Exception("Already exists an user with this email");
         }
-
-        if(userDto.IsAdmin)
-        {
-            await _roleService.CreateRoleIfNotExistisAsync();
-        }
-
+        
         User newUser = new User(userDto.Email, userDto.UserName, userDto.LanguageId);
         IdentityResult result = await _userRepository.CreateUser(newUser, userDto.Password);
         if (!result.Succeeded)
@@ -39,6 +34,10 @@ public class UserService
             throw new Exception(GetIdentityResultErros(result));
         }
 
+        if (!userDto.IsAdmin)
+            return;
+        
+        await _roleService.CreateRoleIfNotExistisAsync();
         IdentityResult roleResult = await _userRepository.AddRoleToUserAsync(Roles.ADMIN.ToString(), newUser);
         if (!roleResult.Succeeded)
         {

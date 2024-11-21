@@ -79,18 +79,31 @@ public class  CardService
         return cards;
     }
 
-    public async Task<ICollection<Card>> GetCardsByIdAsync(IEnumerable<Guid> cardsIds)
+    public async Task<ICollection<Card>> GetCardsListByIdAsync(IEnumerable<Guid> cardsIds)
     {
-        IEnumerable<Task<Card>> cardsTask = cardsIds.Select(id => GetCardByIdAsync(id));
-        await Task.WhenAll(cardsTask);
+        IEnumerable<Card> foundedCardsIds = await _cardRepository.GetCardsByIdList(cardsIds);
 
-        List<Card> cards = new List<Card>();
-        foreach (var cardTask in cardsTask)
+        IEnumerable<Guid> notFoundedCards = cardsIds.Where(p => !foundedCardsIds.Select(p => p.Id).Contains(p));
+
+        var cardsTasks = notFoundedCards.Select(p => GetCardOnApiById(p));
+        Task.WaitAll(cardsTasks);
+
+        var creationCardTask = cardsTasks.Where(p => p.Result is not null).Select(p => _cardRepository.CreateCard(p.Result!));
+        Task.WaitAll(creationCardTask);
+
+        foreach (var cardTask in creationCardTask)
         {
-            if (cardTask.IsCompletedSuccessfully)
-                cards.Append(cardTask.Result);
+            foundedCardsIds.Append(cardTask.Result);
         }
-        return cards;
+        
+        return foundedCardsIds.ToArray();
+    }
+
+    private async Task<Card?> GetCardOnApiById(Guid cardId)
+    {
+        ApiMagicCard? apiCard = await _cardApiRepository.GetMagicCardByIdAsync(cardId);
+        if (apiCard is null) return null;
+        return new Card(apiCard);
     }
 
     public async Task<Card> CreateCardAsync(Card card){

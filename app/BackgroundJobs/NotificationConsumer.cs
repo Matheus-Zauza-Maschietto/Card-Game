@@ -1,41 +1,37 @@
-using System.Collections.ObjectModel;
-using System.Text.Json;
-using app.DTOs;
 using app.Enums;
-using app.Models;
-using app.Repositories;
-using app.Repositories.Interfaces;
-using app.Services;
 using Confluent.Kafka;
 
 namespace app.BackgroundJobs;
 
-public class DeckConsumer : BackgroundService
+public class NotificationConsumer : BackgroundService
 {
     private readonly IConsumer<Null, string> _consumer;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly SemaphoreSlim _semaphore;
+    private readonly ILogger<NotificationConsumer> _logger;
 
-    public DeckConsumer(
+    public NotificationConsumer(
         IConfiguration configuration, 
-        IServiceScopeFactory serviceScopeFactory
-        )
+        IServiceScopeFactory serviceScopeFactory,
+        ILogger<NotificationConsumer> logger
+    )
     {
         _serviceScopeFactory = serviceScopeFactory;
         var config = new ConsumerConfig
         {
-            GroupId = ConsumerGroups.DeckImport,
+            GroupId = ConsumerGroups.Notification,
             BootstrapServers = configuration["Kafka:BootstrapServers"],
             AutoOffsetReset = AutoOffsetReset.Earliest,
-            MaxInFlight = 2,
+            MaxInFlight = 5,
             EnableAutoCommit = false,
         };
 
         _consumer = new ConsumerBuilder<Null, string>(config).Build();
-        _consumer.Subscribe(Topics.ImportDeckTopic);
-        _semaphore = new SemaphoreSlim(2);
+        _consumer.Subscribe(Topics.NotificationTopic);
+        _semaphore = new SemaphoreSlim(5);
+        _logger = logger;
     }
-
+    
     protected override async Task ExecuteAsync(CancellationToken stoppingToken) => Task.Run(async () =>
     {
         try
@@ -46,12 +42,12 @@ public class DeckConsumer : BackgroundService
                 if (result == null)
                     continue;
                 await _semaphore.WaitAsync(stoppingToken);
-                ProcessDeckResult(result);
+                ProcessNotificationResult(result);
             }
         }
         catch (Exception)
         {
-            Console.WriteLine("Consumo de mensagens Kafka cancelado.");
+            Console.WriteLine("Consumo de notificações Kafka cancelado.");
         }
         finally
         {
@@ -60,16 +56,11 @@ public class DeckConsumer : BackgroundService
     });
     
     
-    private async Task ProcessDeckResult(ConsumeResult<Null, string> result)
+    private async Task ProcessNotificationResult(ConsumeResult<Null, string> result)
     {
         try
         {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var deckService = scope.ServiceProvider.GetRequiredService<DeckService>();
-            var cardService = scope.ServiceProvider.GetRequiredService<CardService>();
-            var importDeckMessage = JsonSerializer.Deserialize<ImportDeckKafkaMessage>(result.Message.Value);
-            Card cardsImported = await cardService.GetCardByIdAsync(importDeckMessage.ImportCardDTO.Id);
-            await deckService.ImportCardAsync(cardsImported, importDeckMessage.CreatedDeckId);
+            _logger.LogInformation(result.Message.Value);
             _consumer.Commit(result);
         }
         catch (Exception ex)

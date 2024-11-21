@@ -22,16 +22,21 @@ public class DeckController : ControllerBase
     private readonly DeckService _deckService;
     private readonly CardService _cardService;
     private readonly DeckCardService _deckCardService;
+    private readonly KafkaService _kafkaService;
+
     public DeckController(
-        DeckService deckService, 
-        DeckCardService deckCardService, 
-        CardService cardService,
-        IRedisRepository cache)
+            DeckService deckService, 
+            DeckCardService deckCardService, 
+            CardService cardService,
+            IRedisRepository cache,
+            KafkaService kafkaService
+        )
     {
         _deckCardService = deckCardService;
         _deckService = deckService;
         _cardService = cardService;
         _cache = cache;
+        _kafkaService = kafkaService;
     }
 
     [HttpGet()]
@@ -70,6 +75,13 @@ public class DeckController : ControllerBase
                     _cardService.SetCardLanguage(commanderCard, createdDeck.User.Language),
                     _cardService.SetCardListLanguage(createdDeck.DeckCards.Select(p => p.Card).ToList(), createdDeck.User.Language).ToList()
                 );
+            
+            _kafkaService.SendNotification(new NotificationKafkaMessage()
+            {
+                UserEmail = userEmailClaim,
+                Message = $"Criação do deck {deck.Id} feita com sucesso!",
+            });
+            
             return Ok(deck);
         }
         catch (Exception ex)
@@ -86,8 +98,12 @@ public class DeckController : ControllerBase
             validator.ValidateAndThrow(deckDTO);
             string? userEmailClaim = User.FindFirstValue(ClaimTypes.Email);
             Deck importedDeck = await _deckService.ImportDeckAsync(userEmailClaim ?? string.Empty, deckDTO);
-            
-            return Ok("Import has started.");
+            _kafkaService.SendNotification(new NotificationKafkaMessage()
+            {
+                UserEmail = userEmailClaim,
+                Message = $"Importação do deck {importedDeck.Id} iniciada com sucesso!",
+            });
+            return Ok($"Import has started. deck: {importedDeck.Id}");
         }
         catch (Exception ex)
         {
@@ -100,6 +116,7 @@ public class DeckController : ControllerBase
     {
         try
         {
+
             string? userEmailClaim = User.FindFirstValue(ClaimTypes.Email);
             DeckDTO? deckDTO = await _cache.GetCacheAsync<DeckDTO>($"deck:{id}:user:{userEmailClaim}");
             if(deckDTO is not null)
@@ -131,6 +148,11 @@ public class DeckController : ControllerBase
         {
             string? userEmailClaim = User.FindFirstValue(ClaimTypes.Email);
             Deck deck = await _deckService.UpdateDeckNameByIdAsync(userEmailClaim ?? string.Empty, id, name);
+            _kafkaService.SendNotification(new NotificationKafkaMessage()
+            {
+                UserEmail = userEmailClaim,
+                Message = $"Alteração do deck {deck.Id} feita com sucesso!",
+            });
             return Ok(
                     new DeckDTO(
                         deck

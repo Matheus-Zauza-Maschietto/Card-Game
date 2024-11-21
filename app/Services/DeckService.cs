@@ -90,13 +90,16 @@ public class  DeckService
         Deck deck = new Deck(user, importDeckDTO.Name, commanderCard);
         
         Deck createdDeck = await _deckRepository.CreateDeckAsync(deck);
-        
-        _kafkaService.SendMessage(new ImportDeckKafkaMessage()
+
+        foreach (var card in importDeckDTO.CardsDTO)
         {
-            ImportCardDTO = importDeckDTO.CardsDTO,
-            UserId = user.Id,
-            CreatedDeckId = createdDeck.Id
-        }, Topics.ImportDeckTopic);
+            _kafkaService.SendImportation(new ImportDeckKafkaMessage()
+            {
+                ImportCardDTO = card,
+                UserId = user.Id,
+                CreatedDeckId = createdDeck.Id
+            });
+        }
         
         return createdDeck;
     }
@@ -140,7 +143,7 @@ public class  DeckService
         return deck;
     }
 
-    public async Task<Deck> ImportCardsAsync(ICollection<Card> cardsImported, Guid deckId)
+    public async Task<Deck> ImportCardAsync(Card cardsImported, Guid deckId)
     {
         Deck deck = await GetDeckByIdAsync(deckId);
         deck.ImportCards(cardsImported);

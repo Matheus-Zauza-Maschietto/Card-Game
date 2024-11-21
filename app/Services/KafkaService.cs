@@ -1,4 +1,6 @@
 using System.Text.Json;
+using app.DTOs;
+using app.Enums;
 using Confluent.Kafka;
 
 namespace app.Services;
@@ -17,4 +19,13 @@ public class KafkaService
         DeliveryResult<Null, string> result = await _producer.ProduceAsync(topic, new Message<Null, string> { Value = messageSerialized });
         return result;
     }
+
+    public async Task<DeliveryResult<Null, string>> SendNotification(NotificationKafkaMessage message) =>
+        await SendMessage(message, Topics.NotificationTopic);
+    
+    public async Task<DeliveryResult<Null, string>> SendLog(LogsKafkaMessage message) =>
+        await SendMessage(message, Topics.LogTopic);
+
+    public async Task<DeliveryResult<Null, string>> SendImportation(ImportDeckKafkaMessage message) =>
+        await SendMessage(message, Topics.ImportDeckTopic);
 }

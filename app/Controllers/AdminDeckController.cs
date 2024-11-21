@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using app.DTOs;
 using app.Enums;
@@ -18,10 +19,12 @@ public class AdminDeckController : ControllerBase
 {
     private readonly IRedisRepository _cache;
     private readonly DeckService _deckService;
-    public AdminDeckController(DeckService deckService, IRedisRepository cache)
+    private readonly KafkaService _kafkaService;
+    public AdminDeckController(DeckService deckService, IRedisRepository cache, KafkaService kafkaService)
     {
         _deckService = deckService;
         _cache = cache;
+        _kafkaService = kafkaService;
     }
     
     [AllowAnonymous]

@@ -23,6 +23,11 @@ namespace app.Repositories;
         return await _cardContext.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
     }
 
+    public async Task<ICollection<Card>> GetCardsByIdList(IEnumerable<Guid> ids)
+    {
+        return await _cardContext.Where(p => ids.Contains(p.Id)).ToListAsync(); 
+    }
+
     public async Task<Card> CreateCard(Card card)
     {
         var createdCard = await _cardContext.AddAsync(card);

@@ -34,7 +34,19 @@ public static class KafkaConfig
             NumPartitions = 1,
             ReplicationFactor = 1,
         };
-        var topics = new[] { importTopic };
+        TopicSpecification notificationTopic = new TopicSpecification()
+        {
+            Name = Topics.NotificationTopic,
+            NumPartitions = 1,
+            ReplicationFactor = 1,
+        };
+        TopicSpecification logTopic = new TopicSpecification()
+        {
+            Name = Topics.LogTopic,
+            NumPartitions = 1,
+            ReplicationFactor = 1,
+        };
+        var topics = new[] { importTopic, notificationTopic, logTopic };
         
         return topics.Where(
                 topic => !existingTopicsNames.Contains(topic.Name, StringComparer.OrdinalIgnoreCase)

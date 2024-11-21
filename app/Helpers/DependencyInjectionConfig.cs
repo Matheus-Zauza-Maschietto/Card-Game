@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using app.Middlewares;
 using app.Models;
 using app.Repositories;
 using app.Repositories.Interfaces;
@@ -29,5 +30,6 @@ namespace app.Helper;
             builder.Services.AddScoped<IDeckCardRepository, DeckCardRepository>();
             builder.Services.AddSingleton<IRedisRepository, RedisRepository>();
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<LogsMiddleware>();
         }   
     }

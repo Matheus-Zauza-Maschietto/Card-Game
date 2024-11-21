@@ -1,6 +1,7 @@
 using app.Context;
 using app.Helper;
 using app.Helpers;
+using app.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,8 @@ builder.ConfigureBackgroundJobs();
 
 builder.ConfigureValidators();
 
+builder.ConfigureLogging();
+
 var app = builder.Build();
 
 app.UseCors(cr =>
@@ -47,6 +50,8 @@ app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
+app.UseMiddleware<LogsMiddleware>();
 app.MapControllers();
 app.ConfigureInitialMigration();
+
 app.Run();
