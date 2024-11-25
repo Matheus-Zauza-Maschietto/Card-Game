@@ -7,6 +7,7 @@ using app.Models;
 using app.Repositories;
 using app.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using StackExchange.Redis;
 
 namespace app.Services;
 
@@ -25,7 +26,5 @@ public class RoleService
             await _roleRepository.CreateRoleAsync(new IdentityRole(Roles.ADMIN.ToString()));
         }
     }
-
-    
 
 }

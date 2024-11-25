@@ -92,6 +92,11 @@ public class UserService
         }
     }
 
+    public async Task<IEnumerable<string>> GetUserRoles(User user)
+    {
+        return await _userRepository.GetRolesFromUserAsync(user);
+    }
+
     private ClaimsIdentity GetClaims(LoginUserDTO loginDto, IList<string> roles)
     {
 

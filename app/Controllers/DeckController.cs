@@ -98,6 +98,7 @@ public class DeckController : ControllerBase
             validator.ValidateAndThrow(deckDTO);
             string? userEmailClaim = User.FindFirstValue(ClaimTypes.Email);
             Deck importedDeck = await _deckService.ImportDeckAsync(userEmailClaim ?? string.Empty, deckDTO);
+            
             _kafkaService.SendNotification(new NotificationKafkaMessage()
             {
                 UserEmail = userEmailClaim,

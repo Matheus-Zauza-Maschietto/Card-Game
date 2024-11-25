@@ -85,23 +85,34 @@ public class  DeckService
     {
         User? user = await _userService.GetUserByEmail(userEmail);
         
+        Task<IEnumerable<string>> userRoles = _userService.GetUserRoles(user);
+        
         Card? commanderCard = await _cardService.GetCardByIdAsync(importDeckDTO.CommanderCardId);
         
         Deck deck = new Deck(user, importDeckDTO.Name, commanderCard);
         
         Deck createdDeck = await _deckRepository.CreateDeckAsync(deck);
 
-        foreach (var card in importDeckDTO.CardsDTO)
-        {
-            _kafkaService.SendImportation(new ImportDeckKafkaMessage()
-            {
-                ImportCardDTO = card,
-                UserId = user.Id,
-                CreatedDeckId = createdDeck.Id
-            });
-        }
+        IEnumerable<ImportDeckKafkaMessage> importMessages =
+            importDeckDTO.CardsDTO.Select(p => new ImportDeckKafkaMessage(p, user, createdDeck));
+        
+        ImportCardsAsync(importMessages, userRoles.Result.Contains(Roles.ADMIN.ToString()));
         
         return createdDeck;
+    }
+
+    private async Task ImportCardsAsync(IEnumerable<ImportDeckKafkaMessage> importMessages, bool isAdmin = false)
+    {
+        if (isAdmin)
+            foreach (var importDeckKafkaMessage in importMessages)
+            {
+                _kafkaService.SendAdminImportation(importDeckKafkaMessage);   
+            }
+        else
+            foreach (var importDeckKafkaMessage in importMessages)
+            {
+                _kafkaService.SendImportation(importDeckKafkaMessage);   
+            }
     }
     
     public async Task<Deck> CreateDeckAsync(string userEmail, CreateDeckDTO deckDto)

@@ -23,9 +23,13 @@ public class KafkaService
     public async Task<DeliveryResult<Null, string>> SendNotification(NotificationKafkaMessage message) =>
         await SendMessage(message, Topics.NotificationTopic);
     
+    
     public async Task<DeliveryResult<Null, string>> SendLog(LogsKafkaMessage message) =>
         await SendMessage(message, Topics.LogTopic);
 
     public async Task<DeliveryResult<Null, string>> SendImportation(ImportDeckKafkaMessage message) =>
         await SendMessage(message, Topics.ImportDeckTopic);
+    
+    public async Task<DeliveryResult<Null, string>> SendAdminImportation(ImportDeckKafkaMessage message) =>
+        await SendMessage(message, Topics.ImportAdminDeckTopic);
 }

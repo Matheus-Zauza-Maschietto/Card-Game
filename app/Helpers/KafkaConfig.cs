@@ -15,7 +15,7 @@ public static class KafkaConfig
     public static void ConfigureKafkaTopics(this WebApplicationBuilder builder)
     {
         IAdminClient adminClient = GetAdminClient(builder.Configuration);
-        var metadata = adminClient.GetMetadata(Topics.ImportDeckTopic, TimeSpan.FromSeconds(10));
+        var metadata = adminClient.GetMetadata(TimeSpan.FromSeconds(10));
         var topicsToCreate = GetTopicsSpecifications(
                 metadata.Topics.Select(topic => topic.Topic)
             );
@@ -23,7 +23,6 @@ public static class KafkaConfig
             return;
         
         adminClient.CreateTopicsAsync(topicsToCreate);
-        Console.WriteLine($"Tópico Criado: {Topics.ImportDeckTopic}");
     }
 
     private static IEnumerable<TopicSpecification> GetTopicsSpecifications(IEnumerable<string> existingTopicsNames)
@@ -31,6 +30,12 @@ public static class KafkaConfig
         TopicSpecification importTopic = new TopicSpecification()
         {
             Name = Topics.ImportDeckTopic,
+            NumPartitions = 1,
+            ReplicationFactor = 1,
+        };
+        TopicSpecification adminImportTopic = new TopicSpecification()
+        {
+            Name = Topics.ImportAdminDeckTopic,
             NumPartitions = 1,
             ReplicationFactor = 1,
         };
@@ -46,7 +51,8 @@ public static class KafkaConfig
             NumPartitions = 1,
             ReplicationFactor = 1,
         };
-        var topics = new[] { importTopic, notificationTopic, logTopic };
+        
+        var topics = new[] { importTopic, notificationTopic, logTopic, adminImportTopic };
         
         return topics.Where(
                 topic => !existingTopicsNames.Contains(topic.Name, StringComparer.OrdinalIgnoreCase)

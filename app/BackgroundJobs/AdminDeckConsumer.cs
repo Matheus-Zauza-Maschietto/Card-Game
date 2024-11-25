@@ -10,13 +10,13 @@ using Confluent.Kafka;
 
 namespace app.BackgroundJobs;
 
-public class DeckConsumer : BackgroundService
+public class AdminDeckConsumer : BackgroundService
 {
     private readonly IConsumer<Null, string> _consumer;
     private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly SemaphoreSlim _semaphore;
 
-    public DeckConsumer(
+    public AdminDeckConsumer(
         IConfiguration configuration, 
         IServiceScopeFactory serviceScopeFactory
         )
@@ -24,7 +24,7 @@ public class DeckConsumer : BackgroundService
         _serviceScopeFactory = serviceScopeFactory;
         var config = new ConsumerConfig
         {
-            GroupId = ConsumerGroups.DeckImport,
+            GroupId = ConsumerGroups.AdminDeckImport,
             BootstrapServers = configuration["Kafka:BootstrapServers"],
             AutoOffsetReset = AutoOffsetReset.Earliest,
             MaxInFlight = 2,
@@ -32,7 +32,7 @@ public class DeckConsumer : BackgroundService
         };
 
         _consumer = new ConsumerBuilder<Null, string>(config).Build();
-        _consumer.Subscribe(Topics.ImportDeckTopic);
+        _consumer.Subscribe(Topics.ImportAdminDeckTopic);
         _semaphore = new SemaphoreSlim(2);
     }
 
