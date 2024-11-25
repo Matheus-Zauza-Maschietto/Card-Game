@@ -15,6 +15,7 @@ Card Game é uma web api que tem como objetivo gerar baralhos de magic de forma 
 - SQL Server => Banco de Dados Relacional
 - NBomber => Teste de Carga
 - Swagger => Documentação da API
+- Kafka => Sistema de Mensageria
 
 ## Diagrama de Classes
 ![Diagrama de classes](./Documentation/classDiagram.jpeg)
